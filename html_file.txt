@@ -1,0 +1,64 @@
+#!/bin/bash
+
+#Function to display the stopped or running services according to user input
+
+function Service
+{
+str="<html>
+<head></head>
+<body>
+<table>
+<tr>
+<th>"
+
+
+echo "1.Display the Stopped Services \n 2.Display the Running Services : "
+read input
+        if [ $input == 1 ]
+        then
+                 echo "$str Stopped services </th><tr><td>" > file1.html
+                 service --status-all 2>/dev/null | grep -w "stopped" >> file1.html
+                 echo "</td></tr></table></body>" >> file1.html
+                 #cp file1.txt file1.html
+        elif [ $input == 2 ]
+        then
+                 echo "$str Running services </th><tr><td>" > file1.html
+                 service --status-all 2>/dev/null | grep -w "running" >> file1.html
+                 echo "</td></tr></table></body>" >> file1.html
+        else
+                 echo "Invalid Input"
+        fi
+}
+
+#Function to print the disk utilization
+function Disk()
+        {
+         echo "$str Disk utilisation </th><tr><td>" > file1.html
+         du >> file1.html
+         echo "</tr></td></table></body>" >> file1.html
+        }
+
+
+function Process()
+        {
+         echo "$str Process </th><tr><td>" > file1.html
+         top -n 1 -b | awk 'NR>=6 {print $1,$2,$9,$10;}' |sort -nrk 3 | head -n 6 >> file1.html
+         echo "</td></tr><table></body>" >> file1.html
+         #top -n 1 -b | awk NR>=6 {print $1,$2,$9,$10}|sort -k3| head -n 6 > Service_proc.html
+        }
+
+
+read -p " Select a catagory \n 1.Services \n 2.Disk \n 3.Process" cat
+case $cat in
+1)
+        Service
+        ;;
+2)
+        Disk
+;;
+3)
+        Process
+;;
+*)
+        echo " wrong choice"
+esac
