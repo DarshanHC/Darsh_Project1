@@ -3,7 +3,6 @@ Jinja2==2.10
 JsonForm==0.0.2
 JsonSir==0.0.2
 MarkupSafe==1.0
-
 PyYAML==3.12
 Python-EasyConfig==0.1.7
 Resource==0.2.1
